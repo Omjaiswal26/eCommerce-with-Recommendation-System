@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+
+{% block start %}
+
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-lg-9">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead class="text-muted">
+                            <tr class="small text-uppercase">
+                                <th scope="col">Product</th>
+                                <th scope="col" width="120"></th>
+                                <th scope="col" width="120">Price</th>
+                                <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for cart_item in cart_items %}
+                            <tr>
+                                <td>
+                                    <figure class="itemside align-items-center">
+                                        <div class="aside"><img src="/media/{{cart_item.product.product_images.first.image}}" style="object-fit: fill;" class="img-sm"></div>
+                                        <figcaption class="info"> <a href="{% url 'get_product' cart_item.product.slug %}" class="title " data-abc="true">{{cart_item.product.product_name}}</a>
+                                        </figcaption>
+                                    </figure>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <div class="price-wrap"> <var class="price">{{cart_item.product.price}}</var>  </div>
+                                </td>
+                                <td class="text-right d-none d-md-block"> <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip" data-abc="true"> <i class="fa fa-heart"></i></a> <a href="{% url 'remove_from_cart' cart_item.uid %}" class="btn btn-light" data-abc="true"> Remove</a> </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </aside>
+        <aside class="col-lg-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    {% include "base/alert.html" %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group"> <label>Have coupon?</label>
+                            <div class="input-group"> <input type="text" class="form-control coupon" name="coupon" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon" type="submit">Apply</button> </span> </div>
+                        </div>
+                    </form>
+                    {% if cart.coupon and cart.get_cart_total >= cart.coupon.minimum_amount%}
+                            <div><b>{{cart.coupon.coupon_code}} Applied </b> <span><a href="{% url 'remove_coupon' cart.uid %}" class="btn btn-primary" style="float: right;">Remove</a> </span> </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <dl class="dlist-align">
+                        <dt>Total price:</dt>
+                        <dd class="text-right ml-3">
+                            ₹{{cart.get_cart_total}}
+                        </dd>
+                    </dl>
+                    {% if cart.get_cart_total > 0 %}
+                    <dl class="dlist-align">
+                        <dt>Delivery Fee:</dt>
+                        <dd class="text-right ml-3">+ ₹60</dd>
+                    </dl>
+                    {% endif %}
+                    <dl class="dlist-align">
+                        <dt>Coupon:</dt>
+                        <dd class="text-right ml-3">
+                            {% if cart.coupon and cart.get_cart_total >= cart.coupon.minimum_amount %}
+                                - ₹{{cart.coupon.discount_price}}
+                            {% endif %}
+                        </dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Total:</dt>
+                        <dd class="text-right text-dark b ml-3">
+                            <strong>
+                                ₹{{cart.total}}
+                        </strong>
+                        </dd>
+                    </dl>
+                    <hr> <a href="{% url 'details'%}" class="btn btn-out btn-primary btn-square btn-main" data-abc="true"> Make Purchase </a> <a href="{% url 'index' %}" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+{% endblock %}

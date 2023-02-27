@@ -1,0 +1,92 @@
+{% extends "base/base.html" %}
+
+{% block start %}
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-8 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Biling details</h5>
+        </div>
+        <div class="card-body">
+          <form method="post">
+          {% csrf_token %}
+          {% include 'base/alert.html' %}
+          <div class="form-group">
+            <input class="form-control" required placeholder="First Name" name="first_name" type="text">
+         </div>
+         <div class="form-group">
+           <input class="form-control" required placeholder="Last Name" name="last_name" type="text">
+        </div>
+        <div class="form-group">
+           <input class="form-control" required placeholder="Address Line 1" name="address_line1" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" required placeholder="Address Line 2" name="address_line2" type="text">
+       </div>
+       <div class="form-group">
+        <input class="form-control" required placeholder="Pincode" name="pincode" type="number">
+       </div>
+       <div class="form-group">
+        <input class="form-control" required placeholder="Email" name="email" type="text">
+       </div>
+        <div class="form-group">
+         <input class="form-control" required placeholder="Phone" name="phone">
+        </div> <!-- form-group// -->
+        <div class="form-group">
+           <button  type="submit" class="btn btn-primary btn-block" > Submit  </button>
+        </div> <!-- form-group// --> 
+
+            <a href="{% url 'index' %}" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a>
+            <!-- Message input 
+            <div class="form-outline mb-4">
+              <textarea class="form-control" id="form7Example7" rows="4"></textarea>
+              <label class="form-label" for="form7Example7">Additional information</label>
+            </div>
+            -->
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-md-4 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Summary</h5>
+        </div>
+        <div class="card-body">
+            <dl class="dlist-align">
+                <dt>Total price:</dt>
+                <dd class="text-right ml-3">
+                    ₹{{cart.get_cart_total}}
+                </dd>
+            </dl>
+            {% if cart.get_cart_total > 0 %}
+            <dl class="dlist-align">
+                <dt>Delivery Fee:</dt>
+                <dd class="text-right ml-3">+ ₹60</dd>
+            </dl>
+            {% endif %}
+            <dl class="dlist-align">
+                <dt>Coupon:</dt>
+                <dd class="text-right ml-3">
+                    {% if cart.coupon and cart.get_cart_total >= cart.coupon.minimum_amount %}
+                        - ₹{{cart.coupon.discount_price}}
+                    {% endif %}
+                </dd>
+            </dl>
+            <dl class="dlist-align">
+                <dt>Total:</dt>
+                <dd class="text-right text-dark b ml-3">
+                    <strong>
+                        ₹{{cart.total}}
+                </strong>
+                </dd>
+            </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

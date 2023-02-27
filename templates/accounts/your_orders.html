@@ -1,0 +1,52 @@
+{% extends "base/base.html" %}
+
+{% block start %}
+
+<div class="container-fluid">
+    <div class="col-md-8 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Your Orders</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-muted">
+                        <tr class="small text-uppercase">
+                            <th scope="col" width="120" style="color: black;">Order Id</th>
+                            <th scope="col" style="color: black;">Name</th>
+                            <th scope="col" width="120" style="color: black;">Order Price</th>
+                            <th scope="col" width="120" style="color: black;">Order Status</th>
+                            <th scope="col" width="120" style="color: black;"   >Details</th>
+                        </tr>
+                    </thead>    
+                    <tbody>
+                        {%for order in orders %}
+                        <tr>
+                            <td style="color: black;">
+                                <div class>{{order.order_id}}</div>
+                            </td>
+                            <td>
+                                <div class>{{order.name}}</div>
+                            </td>
+                            <td>
+                                <div class>{{order.order_price}}</div>
+                            </td>
+                            <td>
+                                <div class>{{order.order_status}}</div>
+                            </td>
+                            <td class="text-right d-none d-md-block"> 
+                                <a href="{% url 'order_detail' order.order_id %}" class="btn btn-light" data-abc="true"> Details</a> 
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

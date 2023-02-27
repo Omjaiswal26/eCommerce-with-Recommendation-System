@@ -1,0 +1,10 @@
+create poster app
+create base 
+create basemodel with uuid
+create models in products
+register products in installed apps
+makemigrations and migrate
+create super user
+register models in admin in products
+create accounts app
+create emails.py in base + enter email details in settings

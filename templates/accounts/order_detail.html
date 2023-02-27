@@ -1,0 +1,117 @@
+{% extends "base/base.html" %}
+
+{% block start %}
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-8 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Order Details</h4>
+        </div>
+        <div class="card-header py-2">
+          <h5 class="mb-0">Address</h5>
+        </div>
+        <div class="card-body">
+          <form>
+          {% for customer in customer %}
+          <div class="form-group">
+            <p><b>First Name</b></p>
+            <p class="form-control">{{customer.first_name}}</p>
+         </div>
+          <div class="form-group">
+            <p><b>Last Name</b></p>
+            <p class="form-control">{{customer.last_name}}</p>
+          </div>
+          <div class="form-group">
+            <p><b>Address Line 1</b></p>
+            <p class="form-control">{{customer.address_line1}}</p>
+          </div>
+          <div class="form-group">
+            <p><b>Address Line 2</b></p>
+            <p class="form-control">{{customer.address_line2}}</p>
+         </div>
+         <div class="form-group">
+          <p><b>Email</b></p>
+          <p class="form-control">{{customer.email}}></p>
+          </div>
+          <div class="form-group">
+            <p><b>Phone</b></p>
+            <p class="form-control">{{customer.phone}}</p>
+         </div>
+         <!-- form-group// --> 
+
+            <a href="{% url 'your_orders' %}" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Back</a>
+            <!-- Message input 
+            <div class="form-outline mb-4">
+              <textarea class="form-control" id="form7Example7" rows="4"></textarea>
+              <label class="form-label" for="form7Example7">Additional information</label>
+            </div>
+            -->
+            {% endfor %}
+          </form>
+        </div>
+      </div>
+    </div>
+    <aside class="col-lg-3">
+      <div class="card mb-3">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Summary</h5>
+        </div>
+              <ul class="list-group">
+              {% for cart_item in cart_items %}
+                <dl class="list-group-item" >
+                    <dt class="text-left" style="font-weight: normal;">{{cart_item.product.product_name}}</dt> 
+                    <dd class="text-right ">
+                      ₹{{cart_item.product.price}}
+                  </dd>
+                </dl>
+              {% endfor %}
+          
+          <div class="card-body">
+              <dl class="dlist-align">
+                  <dt>Total price:</dt>
+                  <dd class="text-right ml-3">
+                      ₹{{cart.get_cart_total}}
+                  </dd>
+              </dl>
+              {% if cart.get_cart_total > 0 %}
+              <dl class="dlist-align">
+                  <dt>Delivery Fee:</dt>
+                  <dd class="text-right ml-3">+ ₹60</dd>
+              </dl>
+              {% endif %}
+              <dl class="dlist-align">
+                  <dt>Coupon:</dt>
+                  <dd class="text-right ml-3">
+                      {% if cart.coupon and cart.get_cart_total >= cart.coupon.minimum_amount %}
+                          - ₹{{cart.coupon.discount_price}}
+                      {% endif %}
+                  </dd>
+              </dl>
+              <dl class="dlist-align">
+                  <dt><b>Total:</b></dt>
+                  <dd class="text-right text-dark b ml-3">
+                      <strong>
+                          ₹{{cart.total}}
+                  </strong>
+                  </dd>
+              </dl>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <dl class="dlist-align">
+              <dt style="font-size: medium;"><b>Status:</b></dt>
+              <dd class="text-right ml-3" style="font-size: medium;">
+                  {{order.order_status}}
+              </dd>
+          </dl>
+          </div>
+        </div>
+      </div>
+      </div>
+  </aside>
+</div>
+</div>
+{% endblock %}
