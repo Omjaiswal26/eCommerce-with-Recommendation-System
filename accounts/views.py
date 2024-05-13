@@ -12,7 +12,7 @@ def login_page(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user_obj = User.objects.filter(username = email)
-
+        
         if not user_obj.exists():
             messages.warning(request , 'Account not found')
             return HttpResponseRedirect(request.path_info)
@@ -38,6 +38,11 @@ def register_page(request):
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        captcha = request.POST.get('captcha')
+
+        if captcha != '2':
+            messages.warning(request , 'Invalid Captcha')
+            return HttpResponseRedirect(request.path_info)
 
         user_obj = User.objects.filter(username = email)
 
@@ -47,7 +52,9 @@ def register_page(request):
         user_obj = User.objects.create(first_name=first_name , last_name=last_name , email=email , username=email)
         user_obj.set_password(password)
         user_obj.save()
-        messages.success(request , 'An Email has been sent on your mail')
+        messages.success(request , 'An Email has been sent to your mail')
+        context = {'mail' : 'Resend Email'}
+        return render(request , 'accounts/register.html' , context)
     return render(request , 'accounts/register.html')
 
 
@@ -141,6 +148,7 @@ def details(request):
 
     if request.method == "POST":
         user = request.user
+        id = random.randint(1111,9999)
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         address_line1 = request.POST['address_line1']
@@ -155,7 +163,7 @@ def details(request):
 
         for i in range(1,110):
             if pincode == str(pincode_list[i]):
-                customer = CustomerDetails(user = user , first_name=first_name , last_name = last_name , address_line1 = address_line1 , address_line2=address_line2 , pincode = pincode , email = email , phone = phone)
+                customer = CustomerDetails(user = user , customer_id = id , first_name=first_name , last_name = last_name , address_line1 = address_line1 , address_line2=address_line2 , pincode = pincode , email = email , phone = phone)
                 customer.save()
                 uid = customer.uid
                 cart_obj = Cart.objects.get(is_paid = False , user = request.user)
@@ -188,8 +196,61 @@ def order(request , uid):
         cart_item = item
         order.order_items.add(cart_item)
         order.save()
-    
-    cart.empty_cart()
+
+    # import requests
+
+    # url = "https://sandbox.cashfree.com/pg/orders"
+
+    # payload = {
+    #     "customer_details": {
+    #         "customer_id": str(details[0].customer_id),
+    #         "customer_email": str(details[0].email),
+    #         "customer_phone": str(details[0].phone),
+    #     },
+    #     "order_id": str(order.order_id),
+    #     "order_amount": order.order_price,
+    #     "order_currency": "INR"
+    # }
+    # headers = {
+    #     "accept": "application/json",
+    #     "x-client-id": "3208122e4902498c1870bcc2d2218023",
+    #     "x-client-secret": "d22216c5f5c5b9f2371ef2ff55922ec0b15a79c1",
+    #     "x-api-version": "2022-09-01",
+    #     "content-type": "application/json"
+    # }
+
+    # response = requests.post(url, json=payload, headers=headers)
+
+    # data = response.json()
+
+    # print(response.text)
+    # pay_id = data['payment_session_id']
+    # print(pay_id)
+
+    # #########
+
+    # ###
+
+
+    # url = "https://sandbox.cashfree.com/pg/orders/sessions"
+
+    # payload = {
+    #     "payment_method": {"upi": {
+    #             "channel": "collect",
+    #             "upi_id": "9667454606@paytm"
+    #         }},
+    #     "payment_session_id": "session_bWY0x-4PP3jopHjP92jo9NwOpYOEn6oD15rBh3BwD1L2rngYs--eCgd53vT60r4Sf3_StehUWF8NF9lTR_WN_MjtsmNP4b1zoWBK1DWCHcyq"
+    # }
+    # headers = {
+    #     "accept": "application/json",
+    #     "x-api-version": "2022-09-01",
+    #     "content-type": "application/json"
+    # }
+
+    # response = requests.post(url, json=payload, headers=headers)
+
+    # print(response.text)
+
     return redirect('index')
 
 @login_required

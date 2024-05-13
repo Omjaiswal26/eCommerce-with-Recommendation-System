@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-bzx99dc#h-el(ac3#cfz6yany=mv^+48yn5q$zsj#i7-835h=9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -55,6 +55,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://posterco.in'
+]
+
 ROOT_URLCONF = 'postersco.urls'
 
 TEMPLATES = [
@@ -81,9 +85,13 @@ WSGI_APPLICATION = 'postersco.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_posterco',
+        'HOST': 'database-1.c9meducb7ayc.ap-northeast-1.rds.amazonaws.com',
+        'USER': 'admin',
+        'PASSWORD': 'indianparasf1234',
+        'PORT': '3306',
+    },
 }
 
 
@@ -144,8 +152,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'om.jaiswal108@gmail.com'
-EMAIL_HOST_PASSWORD = 'bjlwrlmnbzlkxvfk'
+EMAIL_HOST_USER = 'postercomail@gmail.com'
+EMAIL_HOST_PASSWORD = 'witnxfylqfqvqtzw'
 
 LOGIN_REDIRECT_URL = 'cart'
 LOGIN_URL = 'login'

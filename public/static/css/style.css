@@ -1,0 +1,29 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+}
+
+li {
+  float: left;
+  margin-left: 40px;
+}
+
+li a{
+  border-color: none;
+}
+
+li figcaption{
+  color: black;
+  font-family: cursive;
+  font-size: larger;
+  text-align: center; 
+  font-weight: 500;
+}
+
+
+li.page-item{
+  margin:0;
+}

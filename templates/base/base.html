@@ -3,12 +3,13 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>PosterCo</title>
 
-<link rel="shortcut icon" type="image/x-icon" href="/media/images/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="/media/images/icon_main.ico">
 
 <!-- jQuery -->
 <script src="/media/js/jquery-2.0.0.min.js" type="text/javascript"></script>
@@ -22,7 +23,8 @@
 
 <!-- custom style -->
 <link href="/media/css/ui.css" rel="stylesheet" type="text/css"/>
-<link href="/media/css/responsive.css" rel="stylesheet" />
+<link href="/media/css/style2.css" rel="stylesheet" />
+
 
 <!-- custom javascript -->
 <script src="/media/js/script.js" type="text/javascript"></script>
@@ -40,39 +42,49 @@ $(document).ready(function() {
 
 </head>
 <body>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<header class="section-header">
+<div class="topnav" id="myTopnav">
+	<div class="container">
+  <a href="{% url 'index' %}" class="active">Home</a>
+  <a href="#">Series</a>
+  <a href="{% url 'marvel' %}">Movies</a>
+  <a href="{% url 'anime' %}">Anime</a>
+  <a href="#about">Sports</a>
+  <a href="#about">Music</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+</div>
+<script>src="https://code.jquery.com/jquery-3.6.4.js"</script>
+  <script>
+	$(function(){
+        $('a').each(function(){
+            if ($(this).prop('href') == window.location.href) {
+                $(this).addClass('active'); $(this).parents('a').addClass('active');
+				$(this).siblings('a').removeClass('active')
+            }
+        });
+    });
 
-		<nav class="navbar navbar-dark navbar-expand p-0 bg-dark">
-		<div class="container">
-			<ul class="navbar-nav d-none d-md-flex mr-auto">
-				<li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="{% url 'anime' %}">Anime</a></li>
-				<li class="nav-item"><a class="nav-link" href="{% url 'marvel' %}">Marvel</a></li>
-				<li class="nav-item"><a class="nav-link" href="{% url 'dc' %}">DC</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Spirituality</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Motivation</a></li>
-			</ul>
-			<ul class="navbar-nav">
-				<li class="nav-item"><a href="#" class="nav-link"> Call: +99812345678 </a></li>
-				<li class="nav-item dropdown">
-					 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> English </a>
-					<ul class="dropdown-menu dropdown-menu-right" style="max-width: 100px;">
-						<li><a class="dropdown-item" href="#">Arabic</a></li>
-						<li><a class="dropdown-item" href="#">Russian </a></li>
-					</ul>
-				</li>
-			</ul> <!-- list-inline //  -->
-		  </div> <!-- navbar-collapse .// -->
-		 <!-- container //  -->
-		</nav> <!-- header-top-light.// -->
-		
+	/* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+	function myFunction() {
+	var x = document.getElementById("myTopnav");
+	if (x.className === "topnav") {
+		x.className += " responsive";
+	} else {
+		x.className = "topnav";
+	}
+	}
+  </script>
+</div>
 		<section class="header-main border-bottom">
 			<div class="container">
 		<div class="row align-items-center">
 			<div class="col-lg-2 col-4">
 				<div class="brand-wrap">
-					<img class="logo" src="/media/images/logo.png">
+					<a href ="{% url 'index' %}"><img class="logo" src="/media/images/logo_main.png"></a>
 				</div> <!-- brand-wrap.// -->
 			</div>
 			<div class="col-lg-6 col-sm-12">
@@ -97,7 +109,8 @@ $(document).ready(function() {
 						<a href="{% url 'your_orders' %}" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
 						<div class="text">
 							{% if user %}
-							<span class="text-muted">Welcome {{user.first_name}} !!</span>
+							<span class="text" style="color: black
+							;">Welcome {{user.first_name}}!!</span>
 							{% endif %}
 							<div> 
 								<a href="{% url 'login' %}">Sign in</a> |  
@@ -118,5 +131,140 @@ $(document).ready(function() {
         {% block start %}
         {% endblock %}
 
+
+
+<!-- Footer -->
+<footer
+		class="text-center text-lg-start text-white bg-dark"
+		>
+	<!-- Grid container -->
+	<div class="container p-4 pb-0">
+	<!-- Section: Links -->
+	<section class="">
+		<!--Grid row-->
+		<div class="row">
+		<!-- Grid column -->
+		<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+			<h6 class="text-uppercase mb-4 font-weight-bold" style="color: rgb(245, 238, 238);">
+			PosterCo
+			</h6>
+			<p style="color: rgb(205, 205, 205);">
+			Home to India's best posters!
+			</p>
+		</div>
+		<!-- Grid column -->
+
+		<hr class="w-100 clearfix d-md-none" />
+
+		<!-- Grid column -->
+		<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+			<h6 class="text-uppercase mb-4 font-weight-bold" style="color: rgb(245, 238, 238);">Info</h6>
+			<p>
+			<a href="{% url 'about_us' %}" class="text" style="color: rgb(240, 234, 234);">About Us</a>
+			</p>
+			<p>
+			<a href="{% url 'privacy_policy' %}" class="text" style="color: rgb(240, 234, 234);">Privacy Policy</a>
+			</p>
+			<p>
+			<a href="{% url 'cancellation_policy' %}" class="text" style="color: rgb(240, 234, 234);">Cancellation Policy</a>
+			</p>
+			<p>
+			<a href="{% url 'tnc' %}" class="text" style="color: rgb(240, 234, 234);">Terms and Conditions</a>
+			</p>
+		</div>
+		<!-- Grid column -->
+
+		<hr class="w-100 clearfix d-md-none" />
+
+		<!-- Grid column -->
+		<hr class="w-100 clearfix d-md-none" />
+
+		<!-- Grid column -->
+		<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+			<h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+			<p><i class="fas fa-envelope mr-3"></i> postercomail@gmail.com</p>
+			<p><i class="fas fa-phone mr-3"></i> +91 9667454606</p>
+		</div>
+		<!-- Grid column -->
+
+		<!-- Grid column -->
+		<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+			<h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+
+			<!-- Facebook -->
+			<a
+				class="btn btn-primary btn-floating m-1"
+				style="background-color: #3b5998"
+				href="#!"
+				role="button"
+				><i class="fab fa-facebook-f"></i
+			></a>
+
+			<!-- Twitter -->
+			<a
+				class="btn btn-primary btn-floating m-1"
+				style="background-color: #55acee"
+				href="#!"
+				role="button"
+				><i class="fab fa-twitter"></i
+			></a>
+
+			<!-- Google -->
+			<a
+				class="btn btn-primary btn-floating m-1"
+				style="background-color: #dd4b39"
+				href="#!"
+				role="button"
+				><i class="fab fa-google"></i
+			></a>
+
+			<!-- Instagram -->
+			<a
+				class="btn btn-primary btn-floating m-1"
+				style="background-color: #ac2bac"
+				href="#!"
+				role="button"
+				><i class="fab fa-instagram"></i
+			></a>
+
+			<!-- Linkedin -->
+			<a
+				class="btn btn-primary btn-floating m-1"
+				style="background-color: #0082ca"
+				href="#!"
+				role="button"
+				><i class="fab fa-linkedin-in"></i
+			></a>
+			<!-- Github -->
+			<a
+				class="btn btn-primary btn-floating m-1"
+				style="background-color: #333333"
+				href="#!"
+				role="button"
+				><i class="fab fa-github"></i
+			></a>
+		</div>
+		</div>
+		<!--Grid row-->
+	</section>
+	<!-- Section: Links -->
+	</div>
+	<!-- Grid container -->
+
+	<!-- Copyright -->
+	<div
+		class="text-center p-3"
+		style="background-color: rgba(0, 0, 0, 0.2)"
+		>
+	© 2020 Copyright:
+	<a class="text-white" href="https://mdbootstrap.com/"
+		>PosterCo</a
+		>
+	</div>
+	<!-- Copyright -->
+</footer>
+<!-- Footer -->
+</div>
+<!-- End of .container -->
 </body>
 </html>

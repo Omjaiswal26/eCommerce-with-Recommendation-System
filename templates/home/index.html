@@ -1,23 +1,58 @@
 {% extends 'base/base.html' %}
-
 {% block start %}
 
-<div class="container mt-5 pt-5">
-    <div class="row">
+<link href="/media/css/style.css" rel="stylesheet" />
 
-        {% for product in products %}
-        <div class="col-md-3">
-            <figure class="card card-product-grid">
-                <div class="img-wrap"> <img src="/media/{{product.product_images.first.image}}" style=" width:100% ;object-fit: contain"> </div>
-                <figcaption class="info-wrap border-top">
-                    <a href="{% url 'get_product' product.slug %}" class="title">{{product.product_name}}</a>
-                    <div class="price mt-2">₹{{product.price}}</div> <!-- price-wrap.// -->
-                </figcaption>
-            </figure> <!-- card // -->
-        </div> <!-- col.// -->
-        {% endfor %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-title" style="font-family:Arial, Helvetica, sans-serif; text-align:center;"><h4>FEATURED CATEGORIES</h4>    </div>
+        <hr>
+        <br>
+            <ul>
+                {% for category in categories %}
+                <li><a href="{% url 'get_category' category.slug %}"><img src="/media/{{category.category_image}}" style="height: 90px; width: 90px; object-fit:cover ; border-style:solid; border-radius: 50%;"><figcaption>{{category.category_name}}</figcaption></a></li>
+                <li><a href="{% url 'get_category' category.slug %}"><img src="/media/{{category.category_image}}" style="height: 90px; width: 90px; object-fit:cover ; border-style:solid; border-radius: 50%;"><figcaption>{{category.category_name}}</figcaption></a></li>
+                {% endfor %}
+            </ul>   
+        <br>
     </div>
+    <br>
+    <br>
+    <div class="card">
+        <div class="row">
+            {% for product in product_page %}
+            <div class="col-md-3">
+                <figure class="card card-product-grid">
+                    <div class="img-wrap"> <img src="/media/{{product.product_images.first.image}}" style=" width:100% ;object-fit: contain"> </div>
+                    <figcaption class="info-wrap border-top">
+                        <a href="{% url 'get_product' product.slug %}" class="title">{{product.product_name}}</a>
+                        <div class="price mt-2">₹{{product.price}}</div> <!-- price-wrap.// -->
+                    </figcaption>
+                </figure> <!-- card // -->
+            </div> <!-- col.// -->
+            {% endfor %}
+        </div>
+    </div>
+    <br>
 
-    </div>
+    <nav aria-label="page navigation">
+        <ul class="pagination" style="justify-content: center;">
+          
+            {% if product_page.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1"> &laquo 1</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{product_page.previous_page_number}}">Prev</a></li>
+            {% endif %}
+
+            <li class="page-item disabled"><a class="page-link" href="#">Page {{product_page.number}} of {{product_page.paginator.num_pages}}</a></li>
+
+            {% if product_page.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{product_page.next_page_number}}"> Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{product_page.paginator.num_pages}}"> {{product_page.paginator.num_pages}} &raquo</a></li>
+            {% endif %}
+
+        </ul>
+        </nav>  
+        <br>
+</div>
 
 {% endblock %}

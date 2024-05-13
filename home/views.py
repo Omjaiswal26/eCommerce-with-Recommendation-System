@@ -1,9 +1,28 @@
 from django.shortcuts import render
-from products.models import Product
+from products.models import Product , Category
+from django.core.paginator import Paginator
 
 def index(request):
-    context  = {'products' : Product.objects.all()}
-    return render(request , 'home/index.html' , context)
+    products = Product.objects.all()
+
+    #set up pagination
+    p = Paginator(Product.objects.all() , 8)
+    page = request.GET.get('page')
+    product_page = p.get_page(page)
+    
+    return render(request , 'home/index.html' , {'categories' : Category.objects.all() , 'products' : products , 'product_page' : product_page})
+
+def about_us(request):
+    return render(request , 'info/about_us.html')
+
+def privacy_policy(request):
+    return render(request , 'info/privacy_policy.html')
+
+def cancellation_policy(request):
+    return render(request , 'info/cancellation_policy.html')
+
+def tnc(request):
+    return render(request , 'info/tnc.html')
 
 def anime(request):
     context  = {'products' : Product.objects.filter(category__category_name = 'Anime')}

@@ -9,7 +9,6 @@
           <h4 class="card-title mb-4">Sign Up</h4>
           <form method="post">
             {% csrf_token %}
-            {% include "base/alert.html" %}
             
               <div class="form-group">
                  <input class="form-control" required placeholder="First Name" name="first_name" type="text">
@@ -24,12 +23,18 @@
                 <input class="form-control" required placeholder="Password" name="password" type="password">
               </div> <!-- form-group// -->
               <div class="form-group">
+                <input class="form-control" required placeholder="Enter 4-2" name="captcha" type="number">
+              </div> <!-- form-group// -->
+              <div class="form-group">
                   <button type="submit" class="btn btn-primary btn-block"> Register  </button>
-              </div> <!-- form-group// -->    
+              </div> <!-- form-group// -->
+                  
           </form>
           </div> <!-- card-body.// -->
         </div> <!-- card .// -->
-    
+        {% if mail %}
+        <p class="text-center mt-3" style="font-size: medium;"><a href="#">Resend Mail</a></p>
+        {% endif %}
          <p class="text-center mt-4">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
          <br><br>
     <!-- ============================ COMPONENT LOGIN  END.// ================================= -->

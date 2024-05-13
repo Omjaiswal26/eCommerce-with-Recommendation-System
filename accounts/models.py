@@ -15,6 +15,10 @@ class Profile(BaseModel):
     def get_cart_count(self):
         return CartItems.objects.filter(cart__is_paid = False , cart__user = self.user).count()
 
+    def __str__(self):
+        return str(self.user)
+
+
 
 class Cart(BaseModel):
     user = models.ForeignKey(User , on_delete=models.CASCADE , related_name='cart_user')
@@ -67,6 +71,7 @@ class   CartItems(BaseModel):
 
 class CustomerDetails(BaseModel):
     user = models.ForeignKey(User , on_delete=models.CASCADE , related_name='details')
+    customer_id = models.IntegerField(null=True)
     first_name = models.CharField(max_length=100 , verbose_name="First Name")
     last_name = models.CharField(max_length=100)
     address_line1 = models.CharField(max_length=200)
