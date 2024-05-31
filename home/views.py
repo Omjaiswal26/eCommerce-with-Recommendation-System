@@ -9,7 +9,6 @@ def index(request):
     p = Paginator(Product.objects.all() , 8)
     page = request.GET.get('page')
     product_page = p.get_page(page)
-    
     return render(request , 'home/index.html' , {'categories' : Category.objects.all() , 'products' : products , 'product_page' : product_page})
 
 def about_us(request):

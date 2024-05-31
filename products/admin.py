@@ -5,6 +5,7 @@ from .models import *
 
 admin.site.register(Category)
 admin.site.register(SubCategory)
+admin.site.register(Rating)
 
 class ProductImageAdmin(admin.StackedInline):
     model = ProductImage

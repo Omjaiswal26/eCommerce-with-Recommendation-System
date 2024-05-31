@@ -74,6 +74,37 @@
             </main> <!-- col.// -->
         </div> <!-- row.// -->
     </div> <!-- card.// -->
+    <br>
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">RATINGS</h5>
+        <br>
+        {% for rating in ratings %}
+            <div class="card-row">
+                <b>{{rating.user_id }}</b> Rating: {{rating.rating}} <br>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Recommended</h5>
+            <div class="row">
+                {% for recommended_product in  recommended_products %}
+                <div class="col-md-3">
+                    <figure class="card card-product-grid">
+                        <div class="img-wrap"> <img src="/media/{{recommended_product.product_images.first.image}}" style=" width:100% ;object-fit: contain"> </div>
+                        <figcaption class="info-wrap border-top">
+                            <a href="{% url 'get_product' recommended_product.slug %}" class="title">{{recommended_product.product_name}}</a>
+                            <div class="price mt-2">₹{{recommended_product.price}}</div> <!-- price-wrap.// -->
+                        </figcaption>
+                    </figure> <!-- card // -->
+                </div> <!-- col.// -->
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
 </div>
 </section>

@@ -62,7 +62,7 @@ class Cart(BaseModel):
     def __str__(self):
         return str(self.user)
     
-class   CartItems(BaseModel):
+class CartItems(BaseModel):
     cart = models.ForeignKey(Cart , on_delete=models.CASCADE , related_name='cart_items')
     product = models.ForeignKey(Product , on_delete=models.SET_NULL , null=True , blank=True)
 

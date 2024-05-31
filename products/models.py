@@ -1,6 +1,7 @@
 from django.db import models
 from base.models import BaseModel
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 class Category(BaseModel):
     category_name = models.CharField(max_length=100)
@@ -39,7 +40,7 @@ class Product(BaseModel):
         super(Product , self).save(*args,**kwargs)
 
     def __str__(self) -> str:
-        return self.product_name
+        return self.product_name + " " + str(self.uid)
 
 class ProductImage(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE , related_name="product_images")
@@ -51,3 +52,9 @@ class Coupon(BaseModel):
     is_expired = models.BooleanField(default=False)
     discount_price = models.IntegerField(default=100)
     minimum_amount = models.IntegerField(default=500)
+
+class Rating(BaseModel):
+    user_id = models.ForeignKey(User, on_delete= models.CASCADE, related_name="rating_user")
+    product_id = models.ForeignKey(Product, on_delete= models.CASCADE, related_name="rating_product")
+    rating = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now=True)
